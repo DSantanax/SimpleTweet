@@ -1,10 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+
+    <!-- AppBarLayout is a wrapper for a Toolbar in order to apply scrolling effects. -->
+    <!-- Note that AppBarLayout expects to be the first child nested within a CoordinatorLayout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+        <!-- Toolbar is the actual app bar with text and the action items -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/tweetBlue"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <ImageView
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+
+                android:contentDescription="@string/twitter"
+                android:src="@drawable/ic_iconmonstr_twitter_1"
+                android:textColor="@android:color/white" />
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+<!--    relative layout must have the appbar scrolling view behavior
+to adjust the tool bar over it-->
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TimelineActivity">
+    tools:context=".TimelineActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 <!--    wrap the recyclerview with a swipe to refresh layout
         to add the functionality of swiping down -->
@@ -24,3 +61,4 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

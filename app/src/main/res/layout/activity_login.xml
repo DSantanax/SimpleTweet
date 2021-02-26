@@ -6,14 +6,30 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/tweetBlue"
     tools:context=".LoginActivity" >
 
+
+<!--    to load in vector image use src  -->
+    <ImageView
+        android:id="@+id/ivTweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnLogin"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/twitter"
+        android:src="@drawable/ic_iconmonstr_twitter_1"
+        android:layout_marginBottom="20dp"/>
+
     <Button
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
         android:onClick="loginToRest"
+        android:textColor="@android:color/white"
+        android:background="@color/tweetDarkBlue"
         android:text="@string/login_label" />
 
 </RelativeLayout>

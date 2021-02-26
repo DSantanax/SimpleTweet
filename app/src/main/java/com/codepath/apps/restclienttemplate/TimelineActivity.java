@@ -62,6 +62,8 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Find the recycler view
         rvTweets = findViewById(R.id.rvTweets);
+        // add divider between the recycle items
+        rvTweets.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         // init the list of tweets and adapter, pass the context, and list of tweets
         tweets = new ArrayList<>();
         tweetsAdapter = new TweetsAdapter(this, tweets);

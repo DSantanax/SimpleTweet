@@ -22,10 +22,10 @@ The following **optional** features are implemented:
 ----------------------- Detail View ---------------------------------
 - [ ] User can tap a tweet to display a "detailed" view of that tweet
 - [ ] User can see embedded image media within the tweet detail view
---------------------------------------------------------------------
+---------------------------------------------------------------------
 - [ ] User can watch embedded video within the tweet
 - [ ] User can open the twitter app offline and see last loaded tweets
-- [ ] On the Twitter timeline, leverage the CoordinatorLayout to apply scrolling behavior that hides / shows the toolbar.
+- [x] On the Twitter timeline, leverage the CoordinatorLayout to apply scrolling behavior that hides / shows the toolbar.
 
 The following **additional** features are implemented:
 
