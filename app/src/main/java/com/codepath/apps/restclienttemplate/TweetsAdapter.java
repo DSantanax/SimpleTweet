@@ -36,7 +36,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // TODO fix item tweet possible overlap
         View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
         return new ViewHolder(view);
     }
@@ -63,7 +62,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvScreenName;
         TextView userName;
         TextView createdAt;
-        // TODO add name & time
 
         // itemView is a representation of one row in the recycle view, a tweet
         public ViewHolder(@NonNull View itemView) {
