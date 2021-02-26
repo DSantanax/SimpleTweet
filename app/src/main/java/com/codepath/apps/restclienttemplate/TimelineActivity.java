@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -28,6 +29,8 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     TweetsAdapter tweetsAdapter;
     SwipeRefreshLayout swipeContainer;
+    // abstract class, once we instantiate we can implement(override) the necessary methods
+    EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
 
     public static final String TAG = "TimelineActivity";
 
@@ -67,8 +70,52 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setLayoutManager(linearLayoutManager);
         rvTweets.setAdapter(tweetsAdapter);
 
+        // instantiate the endless scroll listener, this takes in a layout manager
+        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            // load more data onto the rv
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "Loading more data for page: " + page);
+                loadMoreTweets();
+            }
+        };
+        // add the scroll listener to the recyclerview
+        rvTweets.addOnScrollListener(endlessRecyclerViewScrollListener);
+
         // after setting up the RecyclerView, we need to populate the data
         populateHomeTimeline();
+    }
+
+    // method to request more tweets
+    private void loadMoreTweets() {
+                // call the get next page of tweets with Json param and id for max_id
+                client.getNextPageOfTweets(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                        Log.i(TAG, "On success loading more data for page");
+                        // deserialize and construct new model objects from the API response
+                        JSONArray jsonArray = json.jsonArray;
+                        try {
+                            // Get tweets from array as list
+                            List<Tweet> newTweets = Tweet.fromJsonArray(jsonArray);
+                            // do not need to call adapter clear() method since we are adding more
+                            // 3. append the new data objects to the existing set of items inside
+                            // the array of items
+                            // 4. this adds the new tweets to the list and notifies the adapter
+                            // within the adapter class itself
+                            tweetsAdapter.addAll(newTweets);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                        Log.e(TAG, "onFailure Failed to get more tweets!", throwable);
+                    }
+                    // get the last tweet id to get older tweets from that point on
+                },  tweets.get(tweets.size() - 1).id);
+
     }
 
     // this is used to perform the get request
@@ -108,6 +155,7 @@ public class TimelineActivity extends AppCompatActivity {
                 // output errors
                 Log.e(TAG, "onFailure: " + response, throwable);
             }
+            // get all new tweets using 1
         });
     }
 }

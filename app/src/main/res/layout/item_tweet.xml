@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    >
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -19,19 +21,50 @@
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/tvBody"
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toStartOf="@+id/tvCreatedAt"
+        android:layout_toEndOf="@+id/tvName"
+        android:textColor="#8F8F8F"
         tools:text="dsantanaXD" />
 
+<!--    the auto link and linksClickable to load the URL and allow the links
+to open in a browser -->
     <TextView
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvScreenName"
+        android:layout_below="@+id/tvName"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ivProfileImage"
-        tools:text="This is my first Tweet!" />
+        tools:text="This is my first Tweet!"
+        android:autoLink="all"
+        android:linksClickable="true"/>
+
+    <TextView
+        android:id="@+id/tvCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvBody"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        tools:text="10h" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:textStyle="bold"
+        tools:text="Daniel Santana Medina" />
+
+
+
 </RelativeLayout>

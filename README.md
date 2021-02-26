@@ -16,11 +16,13 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] User can view more tweets as they scroll with infinite pagination
+- [x] User can view more tweets as they scroll with infinite pagination
 - [ ] Improve the user interface and theme the app to feel "twitter branded"
-- [ ] Links in tweets are clickable and will launch the web browser
+- [x] Links in tweets are clickable and will launch the web browser
+----------------------- Detail View ---------------------------------
 - [ ] User can tap a tweet to display a "detailed" view of that tweet
 - [ ] User can see embedded image media within the tweet detail view
+--------------------------------------------------------------------
 - [ ] User can watch embedded video within the tweet
 - [ ] User can open the twitter app offline and see last loaded tweets
 - [ ] On the Twitter timeline, leverage the CoordinatorLayout to apply scrolling behavior that hides / shows the toolbar.
@@ -39,7 +41,15 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Some challenges I experienced was with the RelativeLayout when the user had a long handle/username
+causing the timer to overlay and make it illegible to read. What I did was add a constraint
+from the handle TextView to the time TextView. This allowed the date to stay within the View
+and cause the handle's overflow to hide if the handle/username was long.
+
+The stretch infinite pagination also caused a few minor issues since the List of tweets was
+not updating due to the max_id. However, this issue was fixed immediately by logging and debugging.
+
+Overall, an amazing project with many new concepts learned!
 
 ## Open-source libraries used
 

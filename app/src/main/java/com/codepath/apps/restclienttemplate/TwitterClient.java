@@ -47,16 +47,30 @@ public class TwitterClient extends OAuthBaseClient {
 				String.format(REST_CALLBACK_URL_TEMPLATE, context.getString(R.string.intent_host),
 						context.getString(R.string.intent_scheme), context.getPackageName(), FALLBACK_URL));
 	}
-	// CHANGE THIS
 	// DEFINE METHODS for different API endpoints here
+	// used to get the initial request of tweets
 	public void getHomeTimeline(JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		// parameters for url request, get 25 tweets
 		params.put("count", 25);
-		// will be use to get pull to refresh recent tweets, default 1 for all
+		// will be use to get pull to refresh recent tweets, default 1 for all since_id
 		params.put("since_id", 1);
+		// apiUrl = https://api.twitter.com/1.1/statuses/home_timeline.json/params
+		// use oauth to request data on behalf of the user
+		client.get(apiUrl, params, handler);
+	}
+
+	// used to load more data tweets
+	public void getNextPageOfTweets(JsonHttpResponseHandler handler, long max_id) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		// parameters for url request, get 25 tweets
+		params.put("count", 25);
+		// to get more for endless scroll user max_id to get content older than max_id
+		params.put("max_id", max_id);
 		// apiUrl = https://api.twitter.com/1.1/statuses/home_timeline.json/params
 		// use oauth to request data on behalf of the user
 		client.get(apiUrl, params, handler);

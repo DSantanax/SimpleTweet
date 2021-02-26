@@ -11,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.target.Target;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
+import java.sql.Time;
 import java.util.List;
 
 // Tweet adapter
@@ -33,6 +36,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // TODO fix item tweet possible overlap
         View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
         return new ViewHolder(view);
     }
@@ -57,6 +61,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivProfileImage;
         TextView tvBody;
         TextView tvScreenName;
+        TextView userName;
+        TextView createdAt;
+        // TODO add name & time
 
         // itemView is a representation of one row in the recycle view, a tweet
         public ViewHolder(@NonNull View itemView) {
@@ -64,15 +71,22 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
+            userName = itemView.findViewById(R.id.tvName);
+            createdAt = itemView.findViewById(R.id.tvCreatedAt);
 
         }
         // method in ViewHolder to bind the data to the views
         public void bind(Tweet tweet) {
             // using the views we bind the data to it
             tvBody.setText(tweet.body);
-            tvScreenName.setText(tweet.user.screenName);
+            tvScreenName.setText(String.format("@%s", tweet.user.screenName));
+            userName.setText(tweet.user.name);
+            // use TimeFormatter to get the difference then format the time
+            createdAt.setText(tweet.getFormattedTimeStamp());
             // using glide we load the image into the ImageView
-            Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+            // using rounded corners we want to override the image to keep it the original size for consistency
+            Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(10)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(ivProfileImage);
+
         }
     }
 
