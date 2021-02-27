@@ -109,7 +109,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TweetImg tweet = (TweetImg) tweets.get(position);
         vh2.tvBody.setText(tweet.body);
         vh2.tvScreenName.setText(String.format("@%s", tweet.user.screenName));
-        vh2.tvScreenName.setText(tweet.user.name);
+        vh2.userName.setText(tweet.user.name);
         // use TimeFormatter to get the difference then format the time
         vh2.createdAt.setText(tweet.getFormattedTimeStamp());
         // using glide we load the image into the ImageView

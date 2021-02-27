@@ -32,7 +32,7 @@ public class TweetImg {
         // get the image url (first check if there is any)
         if(jsonObject.has("extended_entities")) {
             tweet.imageEmb = jsonObject.getJSONObject("extended_entities").getJSONArray("media").getJSONObject(0).getString("media_url");
-            Log.i("Tweet", tweet.user.name + " " + tweet.imageEmb);
+            Log.i("Tweet", tweet.user.name + " " + tweet.user.screenName + " " + tweet.imageEmb);
         }
         return tweet;
     }
