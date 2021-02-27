@@ -20,7 +20,8 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-// TODO last img get data use ternary, possibly add extends
+// TODO update readme with gif and submit
+// TODO add local db for offline mode, video play (possibly), and detail screen
 
 public class TimelineActivity extends AppCompatActivity {
 
@@ -118,8 +119,7 @@ public class TimelineActivity extends AppCompatActivity {
                         Log.e(TAG, "onFailure Failed to get more tweets!", throwable);
                     }
                     // get the last tweet id to get older tweets from that point on
-                    // Todo need to add TweetImg for both (just in case it is the last one)
-                },  ((Tweet) tweets.get(tweets.size() - 1)).id);
+                },  ( (Tweet) tweets.get(tweets.size() - 1)).id);
 
     }
 

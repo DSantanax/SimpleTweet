@@ -43,10 +43,18 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 The most difficult part was creating heterogeneous layouts for the Stream RecyclerView. Initially
 the concepts were a bit difficult however once I understood how the superclass Object played a role in 
-adding the List of data I managed to add both layouts. I will possibly use inheritance to reduce 
-code duplication for the TweetImg.
+adding the List of data I managed to add both layouts. My original issue was that I could not add an image and use the 
+same layout for the different Tweets that did not have the attribute for the JSON data. This caused
+an error when fetching at first then another issue with recycled item getting an image even though
+they did not have that attribute in the JSON. Creating a heterogeneous layout in the RecyclerView
+solved these issues.
 
-Some challenges I experienced was with the RelativeLayout when the user had a long handle/username
+Also, for the heterogeneous layouts I had to extend the Tweet for TweetImg which solved my issue
+for Type Casting (Tweet) when getting the last item in the list since it could of been both. Extending
+solved this issue since TweetImg is of Type Tweet now so I had to check the instanceOf TweetImg
+first before checking instanceOf Tweet because of inheritance.
+
+A challenge I experienced was with the RelativeLayout when the user had a long handle/username
 causing the timer to overlay and make it illegible to read. What I did was add a constraint
 from the handle TextView to the time TextView. This allowed the date to stay within the View
 and cause the handle's overflow to hide if the handle/username was long.

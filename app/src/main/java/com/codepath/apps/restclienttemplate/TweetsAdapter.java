@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,11 +37,12 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-        if(tweets.get(position) instanceof Tweet) {
-            return TEXT;
-        }
-        else if(tweets.get(position) instanceof TweetImg) {
+        // check subclass class first. then child class
+        if(tweets.get(position) instanceof TweetImg) {
             return IMAGE;
+        }
+        else if(tweets.get(position) instanceof Tweet) {
+            return TEXT;
         }
         return -1;
     }
@@ -101,7 +103,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         // using glide we load the image into the ImageView
         // using rounded corners we want to override the image to keep it the original size for consistency
         Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(10)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(vh1.ivProfileImage);
-
     }
     // method in ViewHolder to bind the data to the views
     public void bindImg(ViewHolderImg vh2, int position) {
@@ -117,6 +118,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(10)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(vh2.ivProfileImage);
 
         // Load body text image into glide
+        Log.i("TweetsAdapter", "Loading image embedded " + tweet.imageEmb);
         Glide.with(context).load(tweet.imageEmb).transform(new RoundedCorners(25)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(vh2.ivMediaImage);
     }
 
@@ -157,6 +159,7 @@ class ViewHolderText extends RecyclerView.ViewHolder {
     // itemView is a representation of one row in the recycle view, a tweet
     public ViewHolderText(@NonNull View itemView) {
         super(itemView);
+        Log.i("Tweets Adapter", "Created ViewHolderText");
         ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
         tvBody = itemView.findViewById(R.id.tvBody);
         tvScreenName = itemView.findViewById(R.id.tvScreenName);
@@ -178,6 +181,7 @@ class ViewHolderImg extends RecyclerView.ViewHolder {
     // itemView is a representation of one row in the recycle view, a tweet
     public ViewHolderImg(@NonNull View itemView) {
         super(itemView);
+        Log.i("Tweets Adapter", "Created ViewHolderImg");
         ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
         tvBody = itemView.findViewById(R.id.tvBody);
         tvScreenName = itemView.findViewById(R.id.tvScreenName);

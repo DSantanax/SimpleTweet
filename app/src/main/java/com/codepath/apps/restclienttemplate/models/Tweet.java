@@ -23,9 +23,20 @@ public class Tweet {
     // the ID to check tweet order (new/old)
     public long id;
 
+    // For fromJson call
+    public Tweet(){ }
+
+    // For inheritance
+    public Tweet(String body, String createdAt, User user, long id) {
+        this.body = body;
+        this.createdAt = createdAt;
+        this.user = user;
+        this.id = id;
+    }
+
     // factory method to create tweets, caller handles error
     // the exceptions
-    public static Object fromJson(JSONObject jsonObject) throws JSONException {
+    public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         // create tweet object
         Tweet tweet = new Tweet();
         // must be the exact JSON key name to map it into the value
