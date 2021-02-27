@@ -36,7 +36,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories & stretch goals:
 
-<img src='portrait_simpletweet.gif' title='Video Walkthrough' width="500" height="500" alt='Video Walkthrough' />
+<img src='portrait_simpletweet.gif' title='Video Walkthrough' width="400" height="800" alt='Video Walkthrough' />
 
 GIF created with [ScreenToGif](https://www.screentogif.com/).
 
