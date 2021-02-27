@@ -20,12 +20,14 @@ import java.util.List;
 
 import okhttp3.Headers;
 
+// TODO last img get data use ternary, possibly add extends
+
 public class TimelineActivity extends AppCompatActivity {
 
     // references
     TwitterClient client;
     // hold tweets
-    List<Tweet> tweets;
+    List<Object> tweets;
     RecyclerView rvTweets;
     TweetsAdapter tweetsAdapter;
     SwipeRefreshLayout swipeContainer;
@@ -99,7 +101,7 @@ public class TimelineActivity extends AppCompatActivity {
                         JSONArray jsonArray = json.jsonArray;
                         try {
                             // Get tweets from array as list
-                            List<Tweet> newTweets = Tweet.fromJsonArray(jsonArray);
+                            List<Object> newTweets = Tweet.fromJsonArray(jsonArray);
                             // do not need to call adapter clear() method since we are adding more
                             // 3. append the new data objects to the existing set of items inside
                             // the array of items
@@ -116,7 +118,8 @@ public class TimelineActivity extends AppCompatActivity {
                         Log.e(TAG, "onFailure Failed to get more tweets!", throwable);
                     }
                     // get the last tweet id to get older tweets from that point on
-                },  tweets.get(tweets.size() - 1).id);
+                    // Todo need to add TweetImg for both (just in case it is the last one)
+                },  ((Tweet) tweets.get(tweets.size() - 1)).id);
 
     }
 
@@ -126,7 +129,7 @@ public class TimelineActivity extends AppCompatActivity {
             // get the data on behalf of the user, this will be stored in the json object if successful
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.i(TAG, "onSuccess");
+                Log.i(TAG, "onSuccess" + json);
                 try {
                     // to reference the jsonArray data which is received as an array of tweet objects
                     JSONArray jsonArray = json.jsonArray;

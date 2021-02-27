@@ -32,8 +32,8 @@
         android:textColor="#8F8F8F"
         tools:text="dsantanaXD" />
 
-<!--    the auto link and linksClickable to load the URL and allow the links
-to open in a browser -->
+    <!--    the auto link and linksClickable to load the URL and allow the links
+    to open in a browser -->
     <TextView
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
@@ -65,5 +65,15 @@ to open in a browser -->
         android:textStyle="bold"
         tools:text="Daniel Santana Medina" />
 
+    <ImageView
+        android:id="@+id/ivMediaImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/tvBody"
+        android:layout_toEndOf="@id/ivProfileImage"
+        android:contentDescription="@string/twitter"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
 </RelativeLayout>

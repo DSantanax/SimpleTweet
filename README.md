@@ -2,7 +2,7 @@
 
 **SimpleTweet** is an android app that allows a user to view their Twitter timeline. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
-Time spent: **10** hours spent in total
+Time spent: **25** hours spent in total
 
 ## User Stories
 
@@ -29,7 +29,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] Added heterogeneous layouts to the RecyclerView for Image & Text
 
 ## Video Walkthrough
 
@@ -40,6 +40,11 @@ Here's a walkthrough of implemented user stories:
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
+
+The most difficult part was creating heterogeneous layouts for the Stream RecyclerView. Initially
+the concepts were a bit difficult however once I understood how the superclass Object played a role in 
+adding the List of data I managed to add both layouts. I will possibly use inheritance to reduce 
+code duplication for the TweetImg.
 
 Some challenges I experienced was with the RelativeLayout when the user had a long handle/username
 causing the timer to overlay and make it illegible to read. What I did was add a constraint
