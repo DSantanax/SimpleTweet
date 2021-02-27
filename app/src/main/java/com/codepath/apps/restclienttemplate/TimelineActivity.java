@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -20,8 +22,8 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-// TODO update readme with gif and submit
 // TODO add local db for offline mode, video play (possibly), and detail screen
+// Todo Update the logout functionality & UI (for logging out)
 
 public class TimelineActivity extends AppCompatActivity {
 
@@ -162,5 +164,14 @@ public class TimelineActivity extends AppCompatActivity {
             }
             // get all new tweets using 1
         });
+    }
+
+    // logging out method
+    public void logOut(View view) {
+        // use client to clear token
+        client.clearAccessToken();
+        // go back to the login using an Intent
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
