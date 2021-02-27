@@ -30,12 +30,13 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [x] Added heterogeneous layouts to the RecyclerView for Image & Text tweet
+- [x] Added logout functionality to the Twitter icon in the stream screen
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories & stretch goals:
 
-<img src='portrait_simpletweet.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='portrait_simpletweet.gif' title='Video Walkthrough' width="500" height="500" alt='Video Walkthrough' />
 
 GIF created with [ScreenToGif](https://www.screentogif.com/).
 
