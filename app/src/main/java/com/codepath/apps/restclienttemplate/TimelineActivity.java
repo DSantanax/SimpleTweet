@@ -173,5 +173,7 @@ public class TimelineActivity extends AppCompatActivity {
         // go back to the login using an Intent
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+//        prevent user from going back to their screen (back button)
+        finish();
     }
 }

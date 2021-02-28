@@ -49,6 +49,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		// go to TimeLineActivity after logging in
 		 Intent i = new Intent(this, TimelineActivity.class);
 		 startActivity(i);
+		 // prevent user from going back to the login (this activity) after login
+		 finish();
 	}
 
 	// OAuth authentication flow failed, handle the error
