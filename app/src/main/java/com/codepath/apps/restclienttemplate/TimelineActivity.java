@@ -30,7 +30,7 @@ public class TimelineActivity extends AppCompatActivity {
     // references
     TwitterClient client;
     // hold tweets
-    List<Object> tweets;
+    List<Tweet> tweets;
     RecyclerView rvTweets;
     TweetsAdapter tweetsAdapter;
     SwipeRefreshLayout swipeContainer;
@@ -104,7 +104,7 @@ public class TimelineActivity extends AppCompatActivity {
                         JSONArray jsonArray = json.jsonArray;
                         try {
                             // Get tweets from array as list
-                            List<Object> newTweets = Tweet.fromJsonArray(jsonArray);
+                            List<Tweet> newTweets = Tweet.fromJsonArray(jsonArray);
                             // do not need to call adapter clear() method since we are adding more
                             // 3. append the new data objects to the existing set of items inside
                             // the array of items
@@ -121,7 +121,7 @@ public class TimelineActivity extends AppCompatActivity {
                         Log.e(TAG, "onFailure Failed to get more tweets!", throwable);
                     }
                     // get the last tweet id to get older tweets from that point on
-                },  ( (Tweet) tweets.get(tweets.size() - 1)).id);
+                },  (tweets.get(tweets.size() - 1)).id);
 
     }
 

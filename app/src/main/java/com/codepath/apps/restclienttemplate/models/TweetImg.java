@@ -8,6 +8,11 @@ import com.codepath.apps.restclienttemplate.TimeFormatter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/*
+    TweetImg has been replaced with Media for composition within the Tweet class.
+    This used inheritance with extends
+
+ */
 public class TweetImg extends Tweet {
     // for ImageView
     public String imageEmb;

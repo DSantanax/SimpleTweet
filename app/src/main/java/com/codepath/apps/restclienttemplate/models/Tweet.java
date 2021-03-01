@@ -22,6 +22,8 @@ public class Tweet {
     public User user;
     // the ID to check tweet order (new/old)
     public long id;
+    // Media
+    public Media media;
 
     // For fromJson call
     public Tweet(){ }
@@ -45,23 +47,24 @@ public class Tweet {
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.id = jsonObject.getLong("id");
 
+        // check if we have a media object else keep it as null
+        if(jsonObject.has("extended_entities")){
+            tweet.media = Media.fromJson(jsonObject.getJSONObject("extended_entities"));
+        }
+        // else media is just null
+
+
         return tweet;
     }
 
     // the JSON res will be an array of objects, we want to grab each object within the array
     // and create a Tweet from it along with the user
-    public static List<Object> fromJsonArray(JSONArray jsonArray) throws JSONException {
+    public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {
         // list of Tweet objects
-        List<Object> tweets = new ArrayList<>();
+        List<Tweet> tweets = new ArrayList<>();
         // loop through the JSON array to get the individual tweet objects
         for(int i = 0 ; i < jsonArray.length(); i ++){
-            // we call the Tweet fromJson method which accepts the Tweet objects
-            if(jsonArray.getJSONObject(i).has("extended_entities")) {
-                tweets.add(TweetImg.fromJson(jsonArray.getJSONObject(i)));
-            }
-            else {
-                tweets.add(fromJson(jsonArray.getJSONObject(i)));
-            }
+            tweets.add(fromJson(jsonArray.getJSONObject(i)));
         }
         return tweets;
     }
