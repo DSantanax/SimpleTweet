@@ -37,11 +37,12 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public int getItemViewType(int position) {
         // check subclass class first. then child class
-        // if the media is not null, do this
-        if(tweets.get(position).media != null) {
+        // (NO LONGER USING NULL) if the media is not null or
+        // (FROM DB) if the ID is not 0 (empty constructor) load the IMAGE View
+        if(tweets.get(position).media.id != 0) {
             return IMAGE;
         }
-        // else it is of type Text
+        // else it is of type Text and has ID 0
         else {
             return TEXT;
         }

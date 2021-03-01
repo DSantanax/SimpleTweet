@@ -7,11 +7,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.codepath.apps.restclienttemplate.models.Media;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.TweetDao;
+import com.codepath.apps.restclienttemplate.models.TweetWithUserAndImg;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -36,6 +41,8 @@ public class TimelineActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeContainer;
     // abstract class, once we instantiate we can implement(override) the necessary methods
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
+    // used to reference the DB Dao
+    TweetDao tweetDao;
 
     public static final String TAG = "TimelineActivity";
 
@@ -47,7 +54,8 @@ public class TimelineActivity extends AppCompatActivity {
 
         // create a client to call requests
         client = TwitterApp.getRestClient(this);
-
+        // Get reference to the database in the application context TweetDao
+        tweetDao = ((TwitterApp) getApplicationContext()).getMyDatabase().tweetDao();
         // swipe reference
         swipeContainer = findViewById(R.id.swipeContainer);
 
@@ -88,6 +96,25 @@ public class TimelineActivity extends AppCompatActivity {
         };
         // add the scroll listener to the recyclerview
         rvTweets.addOnScrollListener(endlessRecyclerViewScrollListener);
+
+        // Query for existing tweets in the DB
+        // Here we use Async to prevent throttling on the Main thread (parallel)
+        // this can crash our app if we do it single threaded
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                // call the query to get the tweets
+                List<TweetWithUserAndImg> tweetWithUserAndImgs = tweetDao.getRecentTweetList();
+                // once we get the Tweets with User & Media we want to break it into the objects
+                List<Tweet> tweetsFromDB = TweetWithUserAndImg.getTweetList(tweetWithUserAndImgs);
+                Log.i(TAG, "Loading/Getting data from Database: " + tweetsFromDB.toString());
+                // clear the adapter list first
+                tweetsAdapter.clear();
+                // call the adapter to update
+                tweetsAdapter.addAll(tweetsFromDB);
+
+            }
+        });
 
         // after setting up the RecyclerView, we need to populate the data
         populateHomeTimeline();
@@ -142,14 +169,33 @@ public class TimelineActivity extends AppCompatActivity {
                     // notify the adapter the data changed from the model to the r.v.
 //                    tweetsAdapter.notifyDataSetChanged();
 
-                    // this those the above work, for the swipe to refresh functionality
-
+                    // this those the above work, but for the swipe to refresh functionality
                     // clear the old data list to append the new ones
                     tweetsAdapter.clear();
-                    // add new data
-                    tweetsAdapter.addAll(Tweet.fromJsonArray(jsonArray));
-                    // signal refresh had finished, (to not show the loading indicator
+                    // add new data, this needs to be declared final since it accessed in inner class
+                    // an anonymous class
+                    final List<Tweet> tweetsFromNetwork = Tweet.fromJsonArray(jsonArray);
+                    // load onto the screen and notify adapter all in one
+                    tweetsAdapter.addAll(tweetsFromNetwork);
+                    // signal refresh had finished, (to not show the loading indicator)
                     swipeContainer.setRefreshing(false);
+
+                    // used to save the data
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(TAG, "Saving/Putting data into the Database from API call");
+                            // first we insert users then media, order needs to be preserved to have a foreign key connection
+                            // since Tweet needs to reference the Media and the User keys
+                            List<User> usersFromNetwork = User.fromJsonTweetArray(tweetsFromNetwork);
+                            List<Media> mediaFromNetwork = Media.fromJsonTweetArray(tweetsFromNetwork);
+                            // save the query to get the tweets
+                            // here we insert the ArrayList into an array with new Media[0] to resize itself
+                            tweetDao.insertModel(mediaFromNetwork.toArray(new Media[0]));
+                            tweetDao.insertModel(usersFromNetwork.toArray(new User[0]));
+                            tweetDao.insertModel(tweetsFromNetwork.toArray(new Tweet[0]));
+                        }
+                    });
 
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse JSON data");

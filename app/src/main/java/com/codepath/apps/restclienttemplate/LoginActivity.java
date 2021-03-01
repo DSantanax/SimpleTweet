@@ -20,11 +20,15 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
+		// This is a sample model on how DAO Room is used
 		final SampleModel sampleModel = new SampleModel();
 		sampleModel.setName("CodePath");
 
+		// Get reference to the database in the application context
 		sampleModelDao = ((TwitterApp) getApplicationContext()).getMyDatabase().sampleModelDao();
 
+		// Here we use Async to prevent throttling on the Main thread (parallel)
+		// this can crash our app if we do it single threaded
 		AsyncTask.execute(new Runnable() {
 			@Override
 			public void run() {
