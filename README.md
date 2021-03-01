@@ -2,7 +2,7 @@
 
 **SimpleTweet** is an android app that allows a user to view their Twitter timeline. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
-Time spent: **30** hours spent in total
+Time spent: **42** hours spent in total
 
 ## User Stories
 
@@ -25,7 +25,7 @@ Detail View
 - [ ] User can see embedded image media within the tweet detail view
 ---------------------------------------------------------------------
 - [ ] User can watch embedded video within the tweet
-- [ ] User can open the twitter app offline and see last loaded tweets
+- [x] User can open the twitter app offline and see last loaded tweets
 - [x] On the Twitter timeline, leverage the CoordinatorLayout to apply scrolling behavior that hides / shows the toolbar.
 
 The following **additional** features are implemented:
@@ -44,13 +44,21 @@ GIF created with [ScreenToGif](https://www.screentogif.com/).
 
 ## Notes
 
-The most difficult part was creating heterogeneous layouts for the Stream RecyclerView. Initially
+A very difficult part was creating heterogeneous layouts for the Stream RecyclerView. Initially
 the concepts were a bit difficult however once I understood how the superclass Object played a role in 
 adding the List of data I managed to add both layouts. My original issue was that I could not add an image and use the 
 same layout for the different Tweets that did not have the attribute for the JSON data. This caused
 an error when fetching at first then another issue with recycled item getting an image even though
 they did not have that attribute in the JSON. Creating a heterogeneous layout in the RecyclerView
 solved these issues.
+
+*Update:* The more challenging part was persisting the data when the user was not connected to the Internet
+or had no signal using Room DAO SQLite. This was very challenging and required me to break down the code
+into specific parts such as the Save and Load method for the TweetDAO. This significantly increase my
+efficiency. Also, another issue regarding Room DAO required me to use the debugger to check for any small 
+minor errors which let me to the discovery of a bug that caused my Tweet attributes to be null. 
+On top of this I had to load in another table for the Media class which required me to modify and refactor
+parts of my code to establish a reference to the Tweet and removing Media as a null reference.
 
 Also, for the heterogeneous layouts I had to extend the Tweet for TweetImg which solved my issue
 for Type Casting (Tweet) when getting the last item in the list since it could of been both. Extending
@@ -71,6 +79,7 @@ Overall, an amazing project with many new concepts learned!
 
 - [Android Async HTTP](https://github.com/codepath/CPAsyncHttpClient) - Simple asynchronous HTTP requests with JSON parsing
 - [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
+- [Iconmonstr](https://iconmonstr.com/twitter-1-svg/) - Tweet logo
 
 ## License
 
