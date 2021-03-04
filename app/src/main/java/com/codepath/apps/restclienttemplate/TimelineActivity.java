@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +12,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Media;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -21,13 +26,15 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.Headers;
 
-// TODO add local db for offline mode, video play (possibly), and detail screen
+// TODO video play (possibly), and detail screen
 // Todo Update the logout functionality & UI (for logging out)
 
 public class TimelineActivity extends AppCompatActivity {
@@ -44,6 +51,8 @@ public class TimelineActivity extends AppCompatActivity {
     // used to reference the DB Dao
     TweetDao tweetDao;
 
+    private final int REQUEST_CODE = 99;
+
     public static final String TAG = "TimelineActivity";
 
     @Override
@@ -58,6 +67,12 @@ public class TimelineActivity extends AppCompatActivity {
         tweetDao = ((TwitterApp) getApplicationContext()).getMyDatabase().tweetDao();
         // swipe reference
         swipeContainer = findViewById(R.id.swipeContainer);
+        // find the toolbar view inside the activity layout
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        setSupportActionBar(toolbar);
+        // remove SimpleTweet title
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         // configure the refreshing colors for the loading, default is the solid black
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
@@ -152,6 +167,65 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
 
+    // Menu icons are inflated (same as ActionBar)
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // get the menu inflater and inflate the menu_main; this adds items to the action bar if present
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        // return true to the menu to be displayed
+        return true;
+    }
+
+    // handle the ActionBar click for the menu item that was tapped
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // if the item selected has the ID compose go to it (menu_main)
+        if (item.getItemId() == R.id.compose) {
+            // compose icon has been selected
+            // navigate to the compose icon
+            // Toast.makeText(this, "Compose!", Toast.LENGTH_SHORT).show();
+
+            // create intent going from this context to the ComposeActivity
+            Intent intent = new Intent(this, ComposeActivity.class);
+            // if we expect a result from the activity we can use startActivityForResult
+            // this takes the intent and a CODE to distinguish the which activity
+            startActivityForResult(intent, REQUEST_CODE);
+
+        } else if (item.getItemId() == R.id.logOut) {
+            // use client to clear token
+            client.clearAccessToken();
+            // go back to the login using an Intent
+            Intent intent = new Intent(this, LoginActivity.class);
+            // if we expect a result from the activity we can use startActivityForResult
+            // this takes the intent and a CODE to distinguish the which activity
+            startActivity(intent);
+            // prevent user from going back to their screen (back button)
+            finish();
+        }
+        // return true to consume the tap here
+        return true;
+    }
+
+    // used to handle data received from other activities
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // check if the Compose activity send the data using the request code
+        // the RESULT_OK to check if the results were successfully sent using RESULT_OK activity built in
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            // get data from the Intent (tweet) by unwrapping the passed Parcel object
+            Tweet tweet = (Tweet) Parcels.unwrap(Objects.requireNonNull(data).getParcelableExtra("tweet"));
+            // update the RV with the Tweet
+            // modify data source by adding the tweet to the front
+            tweets.add(0, tweet);
+            // update the adapter that we inserted an item as position 0
+            tweetsAdapter.notifyItemInserted(0);
+            // after we add the data smooth scroll to the new Tweet 0
+            rvTweets.smoothScrollToPosition(0);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     // this is used to perform the get request
     private void populateHomeTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
@@ -211,7 +285,6 @@ public class TimelineActivity extends AppCompatActivity {
             // get all new tweets using 1
         });
     }
-
     // logging out method
     public void logOut(View view) {
         // use client to clear token

@@ -6,12 +6,14 @@ import androidx.room.PrimaryKey;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // Json data from the User
 // Entity creates a table
+@Parcel
 @Entity
 public class User {
 
@@ -26,6 +28,8 @@ public class User {
     @ColumnInfo
     public String profileImageUrl;
 
+    // For parcel
+    public User(){}
 
     // factory method to create Users, caller handles error
     public static User fromJson(JSONObject jsonObject) throws JSONException {

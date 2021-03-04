@@ -15,13 +15,16 @@ import com.codepath.apps.restclienttemplate.TimeFormatter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// 2 annotations, RoomDAO & Parcel
 // 2 foreign keys (one for Media, one for User)
 @Entity(foreignKeys = { @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "userId"),
         @ForeignKey(entity = Media.class, parentColumns = "id", childColumns = "mediaId") })
+@Parcel
 public class Tweet {
     // fields we want from the request JSON method
     @ColumnInfo
@@ -49,7 +52,7 @@ public class Tweet {
     @Ignore
     public Media media;
 
-    // For fromJson call
+    // For parcel
     public Tweet(){ }
 
     // For inheritance - N/A we are using composition

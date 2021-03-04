@@ -2,4 +2,5 @@
 <resources>
     <color name="tweetBlue" >#1DA1F2</color>
     <color name="tweetDarkBlue" >#055C91</color>
+    <color name="darkGrey">#818181</color>
 </resources>

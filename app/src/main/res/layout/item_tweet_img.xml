@@ -65,15 +65,56 @@
         android:textStyle="bold"
         tools:text="Daniel Santana Medina" />
 
+<!--    use adjust view bounds to preserve aspect ratio-->
     <ImageView
         android:id="@+id/ivMediaImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:adjustViewBounds="true"
         android:layout_below="@+id/tvBody"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
         android:layout_toEndOf="@id/ivProfileImage"
         android:contentDescription="@string/twitter"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        tools:srcCompat="@tools:sample/backgrounds/scenic[0]" />
+
+    <ImageView
+        android:id="@+id/ivFav"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/ivMediaImage"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/ivRetweet"
+        android:contentDescription="@string/favorite"
+        android:src="@drawable/ic_vector_heart"
+        />
+
+    <ImageView
+        android:id="@+id/ivRetweet"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/ivMediaImage"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/ivReply"
+        android:contentDescription="@string/retweet"
+        android:src="@drawable/ic_vector_retweet" />
+
+    <ImageView
+        android:id="@+id/ivReply"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/ivMediaImage"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:contentDescription="@string/reply"
+        android:src="@drawable/vector_compose_dm_fab"
+        />
+
 
 </RelativeLayout>

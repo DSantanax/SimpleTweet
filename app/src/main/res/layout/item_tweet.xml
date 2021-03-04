@@ -41,6 +41,7 @@ to open in a browser -->
         android:layout_below="@+id/tvName"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
+        android:textColor="@color/darkGrey"
         android:layout_toEndOf="@+id/ivProfileImage"
         tools:text="This is my first Tweet!"
         android:autoLink="all"
@@ -65,5 +66,42 @@ to open in a browser -->
         android:textStyle="bold"
         tools:text="Daniel Santana Medina" />
 
+    <ImageView
+        android:id="@+id/ivFav"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/tvBody"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/ivRetweet"
+        android:contentDescription="@string/favorite"
+        android:src="@drawable/ic_vector_heart"
+        />
+
+    <ImageView
+        android:id="@+id/ivRetweet"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/tvBody"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/ivReply"
+        android:contentDescription="@string/retweet"
+        android:src="@drawable/ic_vector_retweet" />
+
+    <ImageView
+        android:id="@+id/ivReply"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/tvBody"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:contentDescription="@string/reply"
+        android:src="@drawable/vector_compose_dm_fab"
+        />
 
 </RelativeLayout>

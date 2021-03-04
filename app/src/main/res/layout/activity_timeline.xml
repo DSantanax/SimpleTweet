@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     >
-
     <!-- AppBarLayout is a wrapper for a Toolbar in order to apply scrolling effects. -->
     <!-- Note that AppBarLayout expects to be the first child nested within a CoordinatorLayout -->
     <com.google.android.material.appbar.AppBarLayout
@@ -22,16 +21,15 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/tweetBlue"
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:gravity="center_vertical">
 
             <ImageView
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:onClick="logOut"
                 android:contentDescription="@string/twitter"
                 android:src="@drawable/ic_iconmonstr_twitter_1"
-                android:textColor="@android:color/white" />
+                />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -48,15 +46,16 @@ to adjust the tool bar over it-->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTweets"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTweets"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

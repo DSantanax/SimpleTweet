@@ -7,10 +7,13 @@ import androidx.room.PrimaryKey;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// Parcel is needed here since Tweet contains it (composition)
+@Parcel
 @Entity
 public class Media {
     @ColumnInfo
@@ -18,6 +21,9 @@ public class Media {
     public long id;
     @ColumnInfo
     public String imageEmb;
+
+    // For parcel
+    public Media(){}
 
     // Assign media from JSON
     public static Media fromJson(JSONObject jsonObject) throws JSONException {

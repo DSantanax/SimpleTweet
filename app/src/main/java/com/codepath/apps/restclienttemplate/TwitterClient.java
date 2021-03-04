@@ -2,8 +2,10 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
 
+// Handler for params and JSON HTTP requests
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+// For the OAuth
 import com.codepath.oauth.OAuthBaseClient;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.builder.api.BaseApi;
@@ -75,6 +77,22 @@ public class TwitterClient extends OAuthBaseClient {
 		// use oauth to request data on behalf of the user
 		client.get(apiUrl, params, handler);
 	}
+
+	// used to load more data tweets
+	public void publishTweet(String tweetContent, JsonHttpResponseHandler handler) {
+		// api url endpoint for posts
+		String apiUrl = getApiUrl("statuses/update.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		// parameters for url post, this is required in the docs for the tweet
+		params.put("status", tweetContent);
+		// apiUrl = https://api.twitter.com/1.1/statuses/update.json
+		// use oauth to post data on behalf of the user
+		// this takes in the URL endpoint, params, body (empty), & the handler
+		client.post(apiUrl, params, "", handler);
+	}
+
+
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");

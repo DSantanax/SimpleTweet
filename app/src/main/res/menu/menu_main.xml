@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/compose"
+        android:icon="@drawable/vector_compose_fab"
+        android:title="@string/compose"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/logOut"
+        android:icon="@drawable/ic_iconmonstr_log_out"
+        android:title="@string/logout"
+        app:showAsAction="never"/>
+
+</menu>

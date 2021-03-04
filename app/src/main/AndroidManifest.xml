@@ -7,23 +7,24 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-<!--    clear text traffic is used for getting images through HTTP (API 21+)-->
     <application
         android:name=".TwitterApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        >
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ComposeActivity"></activity>
         <activity android:name=".TimelineActivity" />
-<!--         use no history to prevent the back button from back into the login
-             activity (can also call finish() in the loginSuccess method-->
+        <!--
+         use no history to prevent the back button from back into the login
+             activity (can also call finish() in the loginSuccess method
+        -->
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
