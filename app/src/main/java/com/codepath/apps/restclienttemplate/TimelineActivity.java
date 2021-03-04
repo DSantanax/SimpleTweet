@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +16,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Media;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -23,6 +23,7 @@ import com.codepath.apps.restclienttemplate.models.TweetDao;
 import com.codepath.apps.restclienttemplate.models.TweetWithUserAndImg;
 import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,10 +35,9 @@ import java.util.Objects;
 
 import okhttp3.Headers;
 
-// TODO video play (possibly), and detail screen
-// Todo Update the logout functionality & UI (for logging out)
-
-public class TimelineActivity extends AppCompatActivity {
+// TODO video play (possibly), and detail screen, also add retweet, fav, and reply functions
+// TODO add snackbar, and FAB
+public class TimelineActivity extends AppCompatActivity implements ComposeFragment.TweetComposeDialog {
 
     // references
     TwitterClient client;
@@ -73,6 +73,8 @@ public class TimelineActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // remove SimpleTweet title
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        // hide navigation (along with onWindow override function
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         // configure the refreshing colors for the loading, default is the solid black
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
@@ -184,12 +186,12 @@ public class TimelineActivity extends AppCompatActivity {
             // compose icon has been selected
             // navigate to the compose icon
             // Toast.makeText(this, "Compose!", Toast.LENGTH_SHORT).show();
-
-            // create intent going from this context to the ComposeActivity
-            Intent intent = new Intent(this, ComposeActivity.class);
-            // if we expect a result from the activity we can use startActivityForResult
-            // this takes the intent and a CODE to distinguish the which activity
-            startActivityForResult(intent, REQUEST_CODE);
+            showComposeDialog();
+//            // create intent going from this context to the ComposeActivity
+//            Intent intent = new Intent(this, ComposeActivity.class);
+//            // if we expect a result from the activity we can use startActivityForResult
+//            // this takes the intent and a CODE to distinguish the which activity
+//            startActivityForResult(intent, REQUEST_CODE);
 
         } else if (item.getItemId() == R.id.logOut) {
             // use client to clear token
@@ -206,7 +208,14 @@ public class TimelineActivity extends AppCompatActivity {
         return true;
     }
 
-    // used to handle data received from other activities
+    // show fragment dialog
+    private void showComposeDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        ComposeFragment composeFragment = ComposeFragment.newInstance();
+        composeFragment.show(fm, "TweetCompose");
+    }
+
+    // used to handle data received from other activities, NO LONGER USED (Fragment Dialog is used instead)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         // check if the Compose activity send the data using the request code
@@ -285,6 +294,20 @@ public class TimelineActivity extends AppCompatActivity {
             // get all new tweets using 1
         });
     }
+
+    // hide navigation bar
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }    }
+
     // logging out method
     public void logOut(View view) {
         // use client to clear token
@@ -294,5 +317,18 @@ public class TimelineActivity extends AppCompatActivity {
         startActivity(intent);
 //        prevent user from going back to their screen (back button)
         finish();
+    }
+
+    // handle data coming from the TweetComposeFragment
+    @Override
+    public void onFinishTweetComposeDialog(Tweet tweet) {
+        // add the tweet the data source list
+        tweets.add(0, tweet);
+        // notify the adapter an intem was inserted at position 0
+        tweetsAdapter.notifyItemInserted(0);
+        // smooth scroll to position in the RecyclerView
+        rvTweets.smoothScrollToPosition(0);
+        // Notify user tweet was posted
+        Snackbar.make(rvTweets, "Tweet posted!", Snackbar.LENGTH_LONG).show();
     }
 }

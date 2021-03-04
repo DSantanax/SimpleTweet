@@ -29,7 +29,6 @@
         android:layout_centerHorizontal="true"
         android:onClick="loginToRest"
         android:textColor="@android:color/white"
-        android:background="@color/tweetDarkBlue"
         android:text="@string/login_label" />
 
 </RelativeLayout>

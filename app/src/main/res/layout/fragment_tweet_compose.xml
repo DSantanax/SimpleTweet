@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlCompose"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ComposeActivity">
+    android:id="@+id/rlFrag"
+    tools:context=".ComposeFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textCompose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
+        android:hint="@string/what_s_happening"
+        app:hintAnimationEnabled="true"
+        android:labelFor="@+id/etCompose"
+        android:textColorHint="@color/tweetBlue"
         app:counterEnabled="true"
         app:counterMaxLength="280"
-        android:labelFor="@+id/etCompose"
-        android:hint="@string/what_s_happening"
-        android:textColorHint="@color/tweetBlue"
         app:counterOverflowTextAppearance="@style/counterOverride">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -28,9 +29,9 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:importantForAutofill="no"
-            android:minLines="6"
             android:inputType="textMultiLine"
-            android:theme="@style/AppTheme"/>
+            android:minLines="8"
+            android:theme="@style/AppTheme" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,12 +39,12 @@
         android:id="@+id/btnTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cornerRadius="5dp"
         android:layout_below="@+id/textCompose"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:text="@string/tweet"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        app:cornerRadius="5dp" />
 
 </RelativeLayout>

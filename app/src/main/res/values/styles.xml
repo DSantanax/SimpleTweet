@@ -1,7 +1,7 @@
 <resources>
 
 <!-- use tool bar instead of the action bar -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppBaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -13,12 +13,43 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="colorPrimaryDark">@color/tweetDarkBlue</item>
-        <!-- for the edit text color bar -->
+        <item name="colorPrimary">@color/tweetBlue</item>
+        <item name="colorAccent">@color/tweetDarkBlue</item>
+<!--        button theme -->
+        <item name="materialButtonStyle">@style/Button.MyTheme</item>
+
+<!--        Edit text styles -->
         <item name="colorControlNormal">@color/tweetBlue</item>
         <item name="colorControlActivated">@color/tweetDarkBlue</item>
+
+        <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
+        <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
     </style>
     <style name="counterOverride">
         <item name="android:textColor">#ff0000</item>
+    </style>
+    <!-- SnackBar style need to extend Theme.Material in parent -->
+    <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Snackbar</item>
+        <item name="android:layout_margin">32dp</item>
+
+    </style>
+<!--    SnackBar button style -->
+    <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/whiteTweet</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Snackbar" parent="">
+        <item name="colorPrimary">@color/tweetBlue</item>
+        <item name="android:backgroundTint">@color/tweetDarkBlue</item>
+    </style>
+
+    <style name="Button.MyTheme" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/ButtonStyleTextColor</item>
+    </style>
+
+    <style name="ButtonStyleTextColor">
+        <item name="colorPrimary">@color/tweetDarkBlue</item>
     </style>
 
 </resources>

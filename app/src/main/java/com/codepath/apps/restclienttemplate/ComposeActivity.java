@@ -10,10 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
@@ -27,6 +29,7 @@ public class ComposeActivity extends AppCompatActivity {
     public static final int MAX_TWEET_LENGTH = 280;
 
     // TODO modify the edit text (look and feel)
+    RelativeLayout rlCompose;
     EditText etCompose;
     TextInputLayout textCompose;
     Button btnTweet;
@@ -42,7 +45,7 @@ public class ComposeActivity extends AppCompatActivity {
 
         // get the current rest client (do not create a new one)
         client = TwitterApp.getRestClient(this);
-
+        rlCompose = findViewById(R.id.rlCompose);
         // get the references to the ID's in the layout for activity compose
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
@@ -58,11 +61,23 @@ public class ComposeActivity extends AppCompatActivity {
                 // check error cases if empty or too long
                 // if it is return
                 if (tweetContent.isEmpty()) {
-                    Toast.makeText(ComposeActivity.this, "Sorry, your tweet cannot be empty.", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(rlCompose, R.string.empty_status, Snackbar.LENGTH_SHORT)
+                            .setAction("Dismiss", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // dismissed by user
+                                }
+                            }).show();
                     return;
                 }
                 if (tweetContent.length() > MAX_TWEET_LENGTH) {
-                    Toast.makeText(ComposeActivity.this, "Sorry, your tweet is too long.", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(rlCompose, R.string.empty_status, Snackbar.LENGTH_SHORT)
+                            .setAction("Dismiss", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // dismissed by user
+                                }
+                            }).show();
                     return;
                 }
                 // JsonHttpResponse Handler is used to handle the response
@@ -70,6 +85,14 @@ public class ComposeActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
+
+                        Snackbar.make(rlCompose, R.string.posted_status, Snackbar.LENGTH_SHORT)
+                                .setAction("Dismiss", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // dismissed by user
+                                    }
+                                }).show();
 
                     Toast.makeText(ComposeActivity.this, "Posted status!", Toast.LENGTH_SHORT).show();
                         Log.i(TAG, "onSuccess to publish tweet");
@@ -93,7 +116,7 @@ public class ComposeActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                        Toast.makeText(ComposeActivity.this, "Duplicate post!", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(rlCompose, R.string.dup_post, Snackbar.LENGTH_SHORT);
                         Log.e(TAG, "onFailure to publish tweet: " + tweetContent, throwable);
                     }
                 });
