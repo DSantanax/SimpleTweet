@@ -7,21 +7,42 @@
     android:id="@+id/rlFrag"
     tools:context=".ComposeFragment">
 
+    <!--    Todo update modal -->
+
+    <View
+        android:id="@+id/viewTop"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/tweetBlue"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <ImageView
+        android:id="@+id/ivExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewTop"
+        android:layout_margin="10dp"
+        android:contentDescription="@string/twitter"
+        android:src="@drawable/ic_vector_close" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textCompose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ivExit"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:hint="@string/what_s_happening"
-        app:hintAnimationEnabled="true"
         android:labelFor="@+id/etCompose"
         android:textColorHint="@color/tweetBlue"
         app:counterEnabled="true"
         app:counterMaxLength="280"
-        app:counterOverflowTextAppearance="@style/counterOverride">
+        app:counterOverflowTextAppearance="@style/counterOverride"
+        app:hintAnimationEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etCompose"
@@ -41,10 +62,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textCompose"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:text="@string/tweet"
         android:textColor="@android:color/white"
         app:cornerRadius="5dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/tweetBlue"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

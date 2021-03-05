@@ -21,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -40,12 +41,14 @@ import okhttp3.Headers;
  * Use the {@link ComposeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+// TODO customize Fragment, pass user info
 public class ComposeFragment extends DialogFragment implements View.OnClickListener, TextView.OnEditorActionListener, TextWatcher {
 
     RelativeLayout rlFrag;
     EditText etCompose;
     TextInputLayout textCompose;
     Button btnTweet;
+    ImageView ivExit;
     // reference to client
     TwitterClient client;
     private static final int MAX_TWEET_LENGTH = 280;
@@ -99,6 +102,9 @@ public class ComposeFragment extends DialogFragment implements View.OnClickListe
         etCompose = view.findViewById(R.id.etCompose);
         btnTweet = view.findViewById(R.id.btnTweet);
         textCompose = view.findViewById(R.id.textCompose);
+        ivExit = view.findViewById(R.id.ivExit);
+        // close dialog
+        ivExit.setOnClickListener(this);
         // set call back for on click
         // button onClickListener
         btnTweet.setOnClickListener(this);
@@ -124,66 +130,73 @@ public class ComposeFragment extends DialogFragment implements View.OnClickListe
     // on Click call back
     @Override
     public void onClick(View v) {
-        // make an API call to twitter to publish the tweet
-        final String tweetContent = etCompose.getText().toString();
-        // check error cases if empty or too long
-        // if it is return
-        if (tweetContent.isEmpty()) {
-            Snackbar.make(rlFrag, R.string.empty_status, Snackbar.LENGTH_SHORT)
-                    .setAction("Dismiss", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // dismissed by user
-                        }
-                    }).show();
-            return;
-        }
-        // if tweet exceeds capacity
-        if (tweetContent.length() > MAX_TWEET_LENGTH) {
-            Snackbar.make(rlFrag, R.string.empty_status, Snackbar.LENGTH_SHORT)
-                    .setAction("Dismiss", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // dismissed by user
-                        }
-                    }).show();
-            return;
-        }
-        // JsonHttpResponse Handler is used to handle the response
-        client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
 
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-
-                Snackbar.make(rlFrag, R.string.posted_status, Snackbar.LENGTH_SHORT)
+        if(v instanceof Button) {
+            // make an API call to twitter to publish the tweet
+            final String tweetContent = etCompose.getText().toString();
+            // check error cases if empty or too long
+            // if it is return
+            if (tweetContent.isEmpty()) {
+                Snackbar.make(rlFrag, R.string.empty_status, Snackbar.LENGTH_SHORT)
                         .setAction("Dismiss", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 // dismissed by user
                             }
                         }).show();
+                return;
+            }
+            // if tweet exceeds capacity
+            if (tweetContent.length() > MAX_TWEET_LENGTH) {
+                Snackbar.make(rlFrag, R.string.empty_status, Snackbar.LENGTH_SHORT)
+                        .setAction("Dismiss", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // dismissed by user
+                            }
+                        }).show();
+                return;
+            }
+            // JsonHttpResponse Handler is used to handle the response
+            client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
 
-                Log.i(TAG, "onSuccess to publish tweet");
-                // Json object is a tweet model
-                try {
-                    // create tweet object
-                    Tweet tweet = Tweet.fromJson(json.jsonObject);
-                    // Return input text back to activity through the implemented listener
-                    TweetComposeDialog listener = (TweetComposeDialog) getActivity();
-                    // pass the tweet object back
-                    Objects.requireNonNull(listener).onFinishTweetComposeDialog(tweet);
-                    // close the dialog and return to parent activity
-                    dismiss();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+
+                    Snackbar.make(rlFrag, R.string.posted_status, Snackbar.LENGTH_SHORT)
+                            .setAction("Dismiss", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // dismissed by user
+                                }
+                            }).show();
+
+                    Log.i(TAG, "onSuccess to publish tweet");
+                    // Json object is a tweet model
+                    try {
+                        // create tweet object
+                        Tweet tweet = Tweet.fromJson(json.jsonObject);
+                        // Return input text back to activity through the implemented listener
+                        TweetComposeDialog listener = (TweetComposeDialog) getActivity();
+                        // pass the tweet object back
+                        Objects.requireNonNull(listener).onFinishTweetComposeDialog(tweet);
+                        // close the dialog and return to parent activity
+                        dismiss();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Snackbar.make(rlFrag, R.string.dup_post, Snackbar.LENGTH_SHORT);
-                Log.e(TAG, "onFailure to publish tweet: " + tweetContent, throwable);
-            }
-        });
+
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Snackbar.make(rlFrag, R.string.dup_post, Snackbar.LENGTH_SHORT);
+                    Log.e(TAG, "onFailure to publish tweet: " + tweetContent, throwable);
+                }
+            });
+        }
+        else if (v instanceof ImageView) {
+                dismiss();
+        }
     }
     // Resize the dialog fragment to match parent
     @Override
@@ -197,6 +210,7 @@ public class ComposeFragment extends DialogFragment implements View.OnClickListe
         // Set the width & height of the dialog proportional to 80% of the screen width
         // WindowManager.LayoutParams.WRAP_CONTENT returns the default value
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        // set the modal centered
         window.setGravity(Gravity.CENTER);
         // Call super onResume after sizing
         super.onResume();

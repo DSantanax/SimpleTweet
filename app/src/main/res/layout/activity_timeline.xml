@@ -5,6 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+
     >
     <!-- AppBarLayout is a wrapper for a Toolbar in order to apply scrolling effects. -->
     <!-- Note that AppBarLayout expects to be the first child nested within a CoordinatorLayout -->
@@ -29,6 +30,7 @@
                 android:layout_height="30dp"
                 android:contentDescription="@string/twitter"
                 android:src="@drawable/ic_iconmonstr_twitter_1"
+                android:onClick="gotoTop"
                 />
 
         </androidx.appcompat.widget.Toolbar>
@@ -39,6 +41,7 @@ to adjust the tool bar over it-->
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TimelineActivity"
+    android:id="@+id/rlTimeline"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 <!--    wrap the recyclerview with a swipe to refresh layout
@@ -55,9 +58,23 @@ to adjust the tool bar over it-->
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp" />
+            android:layout_marginTop="0dp" >
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 </RelativeLayout>
+    <!-- floating action button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnFloat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/vector_compose_fab"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/tweetBlue"
+        android:layout_gravity="bottom|end"
+        app:rippleColor="@color/tweetDarkBlue"
+        android:contentDescription="@string/twitter"
+        app:tint="@color/whiteTweet"
+        />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

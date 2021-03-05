@@ -28,7 +28,6 @@ public class ComposeActivity extends AppCompatActivity {
 
     public static final int MAX_TWEET_LENGTH = 280;
 
-    // TODO modify the edit text (look and feel)
     RelativeLayout rlCompose;
     EditText etCompose;
     TextInputLayout textCompose;
@@ -55,8 +54,6 @@ public class ComposeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             // make an API call to twitter to publish the tweet
-
-                // TODO for error handling Toasts we can use android SnackBar instead
                 final String tweetContent = etCompose.getText().toString();
                 // check error cases if empty or too long
                 // if it is return

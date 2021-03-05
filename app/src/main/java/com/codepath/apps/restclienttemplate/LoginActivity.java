@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 
 import com.codepath.apps.restclienttemplate.models.SampleModel;
 import com.codepath.apps.restclienttemplate.models.SampleModelDao;
@@ -14,6 +17,8 @@ import com.codepath.oauth.OAuthLoginActionBarActivity;
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
 	SampleModelDao sampleModelDao;
+	ImageView ivTweet;
+	RotateAnimation rotateAnimation;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +28,12 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		// This is a sample model on how DAO Room is used
 		final SampleModel sampleModel = new SampleModel();
 		sampleModel.setName("CodePath");
+		// get Image view
+		ivTweet = findViewById(R.id.ivTweet);
+
+		// set tweet animation
+		rotateAnimation = new RotateAnimation(30, 90 , Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		ivTweet.setAnimation(rotateAnimation);
 
 		// Get reference to the database in the application context
 		sampleModelDao = ((TwitterApp) getApplicationContext()).getMyDatabase().sampleModelDao();
@@ -71,4 +82,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		getClient().connect();
 	}
 
+	// Animate image
+    public void bumpImage(View view) {
+		ivTweet.startAnimation(rotateAnimation);
+    }
 }

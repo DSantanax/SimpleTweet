@@ -27,7 +27,7 @@ public class TweetWithUserAndImg {
             // assign the tweet, user, and media (previous mistake)!
             Tweet tweet = tweetWithUserAndImgs.get(i).tweet;
             tweet.user = tweetWithUserAndImgs.get(i).user;
-            // If it has a media object add it to the tweet, TODO remove parenthesis
+            // If it has a media object add it to the tweet
 //             if(tweetWithUserAndImgs.get(i).media.id != 0) {
             // get all medias (even the empty constructor ones)
                 tweet.media = tweetWithUserAndImgs.get(i).media;
