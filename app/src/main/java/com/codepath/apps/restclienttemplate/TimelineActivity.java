@@ -37,7 +37,7 @@ import java.util.Objects;
 import okhttp3.Headers;
 
 // TODO video play, add retweet, fav, and reply functions, style modal overlay
-// TODO adjust SQL usage SELECTS, and the load (to load offline only), add APP Icon
+// TODO adjust SQL usage SELECTS, and the load (to load offline only)
 public class TimelineActivity extends AppCompatActivity implements ComposeFragment.TweetComposeDialog {
 
     // references

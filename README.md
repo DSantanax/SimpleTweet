@@ -114,7 +114,8 @@ The following **additional** features are implemented:
 
 - [x] Added heterogeneous layouts to the RecyclerView for Image & Text tweet
 - [x] Added logout functionality to the Twitter icon in the stream screen
-- [x] Toolbar hides/shows based on user scrolling
+- [x] Toolbar hides/shows based on user scrolling with the Float button
+- [x] Added App Icon
 
 ## Video Walkthrough
 
