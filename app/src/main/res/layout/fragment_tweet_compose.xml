@@ -7,12 +7,10 @@
     android:id="@+id/rlFrag"
     tools:context=".ComposeFragment">
 
-    <!--    Todo update modal -->
-
     <View
         android:id="@+id/viewTop"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="20dp"
         android:background="@color/tweetBlue"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
@@ -67,12 +65,5 @@
         android:text="@string/tweet"
         android:textColor="@android:color/white"
         app:cornerRadius="5dp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="@color/tweetBlue"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

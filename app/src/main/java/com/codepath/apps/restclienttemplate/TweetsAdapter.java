@@ -1,11 +1,13 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.target.Target;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -95,25 +99,33 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     // method in ViewHolder to bind the data to the views
     public void bind(ViewHolderText vh1, int position) {
         // using the views we bind the data to it
-        Tweet tweet = tweets.get(position);
+        final Tweet tweet = tweets.get(position);
         vh1.tvBody.setText(tweet.body);
-        vh1.tvScreenName.setText(String.format("@%s", tweet.user.screenName));
+        vh1.tvScreenName.setText(tweet.user.screenName);
         vh1.userName.setText(tweet.user.name);
         // use TimeFormatter to get the difference then format the time
-        vh1.createdAt.setText(tweet.getFormattedTimeStamp());
+        vh1.createdAt.setText(tweet.createdAt);
         // using glide we load the image into the ImageView
         // using rounded corners we want to override the image to keep it the original size for consistency
         Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(10)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(vh1.ivProfileImage);
+        vh1.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("tweet", Parcels.wrap(tweet));
+                context.startActivity(intent);
+            }
+        });
     }
     // method in ViewHolder to bind the data to the views
     public void bindImg(ViewHolderImg vh2, int position) {
         // using the views we bind the data to it
-        Tweet tweet = tweets.get(position);
+        final Tweet tweet = tweets.get(position);
         vh2.tvBody.setText(tweet.body);
-        vh2.tvScreenName.setText(String.format("@%s", tweet.user.screenName));
+        vh2.tvScreenName.setText(tweet.user.screenName);
         vh2.userName.setText(tweet.user.name);
         // use TimeFormatter to get the difference then format the time
-        vh2.createdAt.setText(tweet.getFormattedTimeStamp());
+        vh2.createdAt.setText(tweet.createdAt);
         // using glide we load the image into the ImageView
         // using rounded corners we want to override the image to keep it the original size for consistency
         Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(10)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(vh2.ivProfileImage);
@@ -121,6 +133,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         // Load body text image into glide
         Log.i("TweetsAdapter", "Loading image embedded " + tweet.media.imageEmb);
         Glide.with(context).load(tweet.media.imageEmb).transform(new RoundedCorners(25)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(vh2.ivMediaImage);
+        vh2.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("tweet", Parcels.wrap(tweet));
+                context.startActivity(intent);
+            }
+        });
     }
 
     // get the item count
@@ -156,11 +176,13 @@ class ViewHolderText extends RecyclerView.ViewHolder {
     TextView userName;
     TextView createdAt;
     ImageView ivMediaImage;
+    RelativeLayout relativeLayout;
 
     // itemView is a representation of one row in the recycle view, a tweet
     public ViewHolderText(@NonNull View itemView) {
         super(itemView);
         Log.i("Tweets Adapter", "Created ViewHolderText");
+        relativeLayout = itemView.findViewById(R.id.rlItemTweet);
         ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
         tvBody = itemView.findViewById(R.id.tvBody);
         tvScreenName = itemView.findViewById(R.id.tvScreenName);
@@ -178,11 +200,13 @@ class ViewHolderImg extends RecyclerView.ViewHolder {
     TextView userName;
     TextView createdAt;
     ImageView ivMediaImage;
+    RelativeLayout relativeLayout;
 
     // itemView is a representation of one row in the recycle view, a tweet
     public ViewHolderImg(@NonNull View itemView) {
         super(itemView);
         Log.i("Tweets Adapter", "Created ViewHolderImg");
+        relativeLayout = itemView.findViewById(R.id.rlItemTweet);
         ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
         tvBody = itemView.findViewById(R.id.tvBody);
         tvScreenName = itemView.findViewById(R.id.tvScreenName);

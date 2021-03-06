@@ -40,6 +40,12 @@ public class Tweet {
     public long userId;
 
     @ColumnInfo
+    public String retweetCount;
+
+    @ColumnInfo
+    public String favCount;
+
+    @ColumnInfo
     public long mediaId;
 
     // Here we ignore both the User and Media since we don't want a column
@@ -71,12 +77,18 @@ public class Tweet {
         // must be the exact JSON key name to map it into the value
         tweet.id = jsonObject.getLong("id");
         tweet.body = jsonObject.getString("text");
-        tweet.createdAt = jsonObject.getString("created_at");
+        tweet.createdAt = TimeFormatter.getTimeDifference(jsonObject.getString("created_at"));
         // create User object to define the userId reference and the user
         User user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.user = user;
         tweet.userId = user.id;
-
+        tweet.retweetCount = jsonObject.getString("retweet_count");
+        if(jsonObject.has("favorite_count")) {
+            tweet.favCount = jsonObject.getString("favorite_count");
+        }
+        else{
+            tweet.favCount = "0";
+        }
         // check if we have a media object else keep it as null
         if(jsonObject.has("extended_entities")){
             // create media object

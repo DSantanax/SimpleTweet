@@ -2,7 +2,7 @@
 
 **Name of your app** is an android app that allows a user to view his Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
-Time spent: **25** hours spent in total
+Time spent: **30** hours spent in total
 
 ## User Stories
 
@@ -31,6 +31,7 @@ The following **additional** features are implemented:
 
 - [x] Custom SnackBars
 - [x] Disable tweet button & display text override color when tweet exceeds 280 characters
+- [x] Added Detail Activity
 
 ## Video Walkthrough
 
@@ -42,9 +43,21 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
+Update I:
 For part 2 I did encounter a few issues with the POST method since my screen did freeze when tapping Submit which caused
 my app to terminate. I debugged by program and found out in the compose Activity that I instantiated the TwitterClient rather
 than getting the instance of it. Overall, I have been working on adding more functionality and touching up the UI.
+
+Update II:
+Working on the Float Button and Modal overlay was different and challenging since it required significant refactoring as it was
+part of my code. From the Modal overlay I learned how to pass an object and use that object in the Overlay which I found much 
+simpler than passing through Activities but only when the UI/UX is necessary. For the Float button I had to find documentation 
+on how to make the float disappear and appear. I found the Material layout behavior had this ability which saved time.
+
+Update II:
+Another issue I faced was that the Navigation bar was translucent since I added a responsive navigation bar. This caused overlay 
+with my Float button. I found that in the Android documentation using the SystemDetail attribute caused this. Instead I kept the 
+default behavior which fixed the Float and Navigation bar. 
 
 ## Open-source libraries used
 
@@ -90,7 +103,7 @@ The following **optional** features are implemented:
 - [x] Links in tweets are clickable and will launch the web browser
 ---------------------------------------------------------------------
 Detail View
-- [ ] User can tap a tweet to display a "detailed" view of that tweet
+- [x] User can tap a tweet to display a "detailed" view of that tweet
 - [ ] User can see embedded image media within the tweet detail view
 ---------------------------------------------------------------------
 - [ ] User can watch embedded video within the tweet

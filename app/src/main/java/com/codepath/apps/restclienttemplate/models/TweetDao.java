@@ -17,7 +17,8 @@ public interface TweetDao {
     // here we are using AS for alias since we prefixed the TweetWithUserAndImg
     // User.* select all users
     // INNER JOIN media or Full OUTER JOIN
-    @Query("SELECT Tweet.body AS tweet_body, Tweet.createdAt AS tweet_createdAt, Tweet.id AS tweet_id, User.*, Media.imageEmb AS media_imageEmb, Media.id AS media_id " +
+    @Query("SELECT Tweet.body AS tweet_body, Tweet.createdAt AS tweet_createdAt, Tweet.id AS tweet_id, Tweet.favCount AS tweet_favCount, " +
+            "Tweet.retweetCount AS tweet_retweetCount, User.*, Media.imageEmb AS media_imageEmb, Media.id AS media_id " +
             "FROM Tweet INNER JOIN User ON User.id = Tweet.userId " +
             "INNER JOIN Media ON Media.id = Tweet.mediaId  " +
             "ORDER BY Tweet.createdAt " +

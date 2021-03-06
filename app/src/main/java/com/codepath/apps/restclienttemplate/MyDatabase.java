@@ -14,7 +14,7 @@ import com.codepath.apps.restclienttemplate.models.User;
 
 // When we create a new DB we can have issues with refactoring b/cos we have auto generated schema files
 // we also must change the version to a different one every time we change the DB ^ based on this issue
-@Database(entities={SampleModel.class, Tweet.class, User.class, Media.class}, version=13)
+@Database(entities={SampleModel.class, Tweet.class, User.class, Media.class}, version=18)
 public abstract class MyDatabase extends RoomDatabase {
     // Sample Reference
     public abstract SampleModelDao sampleModelDao();

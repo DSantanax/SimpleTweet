@@ -36,8 +36,8 @@ import java.util.Objects;
 
 import okhttp3.Headers;
 
-// TODO video play (possibly), and detail screen, also add retweet, fav, and reply functions
-// TODO adjust SQL usage SELECTS, Hide float
+// TODO video play, add retweet, fav, and reply functions, style modal overlay
+// TODO adjust SQL usage SELECTS, and the load (to load offline only), add APP Icon
 public class TimelineActivity extends AppCompatActivity implements ComposeFragment.TweetComposeDialog {
 
     // references
@@ -179,7 +179,6 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
                     }
                     // get the last tweet id to get older tweets from that point on
                 },  (tweets.get(tweets.size() - 1)).id);
-
     }
 
     // Menu icons are inflated (same as ActionBar)

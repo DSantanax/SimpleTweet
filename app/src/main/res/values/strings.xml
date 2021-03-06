@@ -17,4 +17,6 @@
     <string name="dup_post">Duplicate post please consider changing it.</string>
     <string name="posted_status">Status successfully posted!</string>
     <string name="empty_status">Your tweet cannot be empty!</string>
+    <string name="numlikes">numLikes</string>
+    <string name="numretweets">numRetweets</string>
 </resources>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+        <!-- Toolbar is the actual app bar with text and the action items -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/tweetBlue"
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="@string/twitter"
+                android:src="@drawable/ic_iconmonstr_twitter_1"
+                />
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+<!--    relative must have the appbar scrolling view -->
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".DetailActivity">
+
+        <ImageView
+            android:id="@+id/ivDetailClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="15dp"
+            android:contentDescription="@string/twitter"
+            android:src="@drawable/ic_vector_close" />
+
+        <ImageView
+            android:id="@+id/ivDetailProImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="15dp"
+            android:contentDescription="@string/user_image"
+            tools:srcCompat="@tools:sample/avatars" />
+
+
+        <TextView
+            android:id="@+id/tvDetailUsername"
+            android:layout_width="198dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDetailHandle"
+            android:layout_marginTop="2dp"
+            android:layout_toStartOf="@+id/ivDetailProImage"
+            android:layout_toEndOf="@+id/ivDetailClose"
+            android:gravity="end"
+            tools:text="Daniel Santana" />
+
+        <TextView
+            android:id="@+id/tvDetailHandle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="21dp"
+            android:layout_toStartOf="@+id/ivDetailProImage"
+            android:layout_toEndOf="@+id/ivDetailClose"
+            android:gravity="end"
+            tools:text="\@DanielSan" />
+
+        <TextView
+            android:id="@+id/tvDetailBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDetailTime"
+            android:layout_alignParentStart="true"
+            android:padding="10dp"
+            tools:text="Hello world welcome to the twitter account yoo! Taught by the OGs CodePath. Thank you!" />
+
+        <TextView
+            android:id="@+id/tvDetailTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivDetailProImage"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            tools:text="10h" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDetailBody"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            tools:text="- San Diego" />
+
+        <ImageView
+            android:id="@+id/ivDetailLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/tvLocation"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/numlikes"
+            android:src="@drawable/ic_vector_heart" />
+
+        <TextView
+            android:id="@+id/tvDetailLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvLocation"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/ivDetailLikes"
+            android:textSize="18sp"
+            tools:text="240" />
+
+        <ImageView
+            android:id="@+id/ivDetailRetweets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvLocation"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/tvDetailLikes"
+            android:contentDescription="@string/retweet"
+            android:src="@drawable/ic_vector_retweet" />
+
+        <TextView
+            android:id="@+id/tvDetailRetweets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvLocation"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/ivDetailRetweets"
+            android:textSize="18sp"
+            tools:text="4032" />
+
+
+        <!--        <VideoView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/tvLocation"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_marginTop="25dp"-->
+        <!--            />-->
+
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

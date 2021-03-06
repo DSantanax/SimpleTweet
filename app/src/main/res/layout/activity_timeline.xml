@@ -64,7 +64,7 @@ to adjust the tool bar over it-->
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>
-    <!-- floating action button -->
+    <!-- floating action button, uses hide scroll behavior for the layout from theme-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnFloat"
         android:layout_width="wrap_content"
@@ -76,5 +76,6 @@ to adjust the tool bar over it-->
         app:rippleColor="@color/tweetDarkBlue"
         android:contentDescription="@string/twitter"
         app:tint="@color/whiteTweet"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

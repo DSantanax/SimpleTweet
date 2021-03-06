@@ -28,6 +28,9 @@ public class User {
     @ColumnInfo
     public String profileImageUrl;
 
+    @ColumnInfo
+    public String locationArea;
+
     // For parcel
     public User(){}
 
@@ -36,8 +39,13 @@ public class User {
         User user = new User();
         user.id = jsonObject.getLong("id");
         user.name = jsonObject.getString("name");
-        user.screenName = jsonObject.getString("screen_name");
+        user.screenName = "@" + jsonObject.getString("screen_name");
         user.profileImageUrl = jsonObject.getString("profile_image_url_https");
+        if(jsonObject.has("location")) {
+            user.locationArea = "- " + jsonObject.getString("location");
+        } else {
+            user.locationArea = "";
+        }
         return user;
     }
 
