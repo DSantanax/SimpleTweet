@@ -88,6 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDetailTime"
+            android:autoLink="all"
+            android:linksClickable="true"
             android:layout_alignParentStart="true"
             android:padding="10dp"
             tools:text="Hello world welcome to the twitter account yoo! Taught by the OGs CodePath. Thank you!" />

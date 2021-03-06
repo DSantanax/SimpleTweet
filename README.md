@@ -1,8 +1,8 @@
-# Project 2 - *SimpleTweet*
+# Project 2 Part 2- *SimpleTweet*
 
 **Name of your app** is an android app that allows a user to view his Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
-Time spent: **30** hours spent in total
+Time spent: **34** hours spent in total
 
 ## User Stories
 
@@ -37,7 +37,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='portrait_simpletweet_part2.gif' title='Video Walkthrough' width="400" height="800" alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -80,7 +80,7 @@ default behavior which fixed the Float and Navigation bar.
     See the License for the specific language governing permissions and
     limitations under the License.
 
-# Project 2 - *SimpleTweet*
+# Project 2 Part 1- *SimpleTweet*
 
 **SimpleTweet** is an android app that allows a user to view their Twitter timeline. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
